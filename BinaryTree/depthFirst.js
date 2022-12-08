@@ -1,4 +1,5 @@
 //DEPTH FIRST TRAVERSAL
+// check left most path
 class Node {
   constructor(val) {
     this.val = val;
@@ -29,10 +30,17 @@ c.right = f;
 
 //output should be [a,b,d,e,c,f] as a stack
 
+//check if stack is empty
+//push right child then left so you hit left first
+//check if stack is empty if its not pop off the top and push its children
+//check if has children if it does then add them to the stack
+
 //Iterative
 //Time complexity: O(n) - add and remove every node to stack once
 //Time complexity: O(n) - only storing stack which is n elements
-const depthFirst = (root) => {
+const depthFirstIterative = (root) => {
+  if (!root) return [];
+
   let values = [];
   let stack = [root]; //stack
 
@@ -45,9 +53,15 @@ const depthFirst = (root) => {
   return values;
 };
 
-//check if stack is empty
-//push right child then left so you hit left first
-//check if stack is empty if its not pop off the top and push its children
-//check if has children if it does then add them to the stack
+//Recursive
+//Time complexity: O(n) - add and remove every node to stack once
+//Time complexity: O(n) - only storing stack which is n elements
+const depthFirstRecursive = (root) => {
+  if (!root) return [];
+  let leftValues = depthFirstRecursive(root.left);
+  let rightValues = depthFirstRecursive(root.right);
+  return [root.val, ...leftValues, ...rightValues];
+};
 
-console.log(depthFirst(a));
+// console.log(depthFirstIterative([]));
+console.log(depthFirstRecursive(a));
